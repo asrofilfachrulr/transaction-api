@@ -14,5 +14,5 @@ type OrderItem struct {
 type OrderPayment struct {
 	ID              uint `gorm:"primaryKey;auto_increment"`
 	OrderID         uint `gorm:"not null"`
-	PaymentMethodID uint `gorm:"not null"`
+	PaymentMethodID uint
 }
