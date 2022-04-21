@@ -1,0 +1,43 @@
+definitions:
+  web.PostOrderInput:
+    type: object
+  web.PostOrderOutput:
+    type: object
+  web.WithDataResp:
+    properties:
+      data:
+        type: any
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /order:
+    post:
+      description: add new user
+      parameters:
+      - description: Entry new order
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/web.PostOrderInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/web.WithDataResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/web.PostOrderOutput'
+              type: object
+      summary: add new user
+      tags:
+      - User
+swagger: "2.0"
