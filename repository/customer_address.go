@@ -5,10 +5,10 @@ import (
 	"gorm.io/gorm"
 )
 
-type CustRepo struct {
+type CustAddrRepo struct {
 	DB *gorm.DB
 }
 
-func (c *CustRepo) Create(m *sql.Customer) error {
+func (c *CustAddrRepo) Create(m *sql.CustomerAddress) error {
 	return c.DB.Create(m).Error
 }

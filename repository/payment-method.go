@@ -5,10 +5,10 @@ import (
 	"gorm.io/gorm"
 )
 
-type CustRepo struct {
+type PaymentMethodRepo struct {
 	DB *gorm.DB
 }
 
-func (c *CustRepo) Create(m *sql.Customer) error {
-	return c.DB.Create(m).Error
+func (c *PaymentMethodRepo) FindAll(m *[]sql.PaymentMethod) error {
+	return c.DB.Find(m).Error
 }
