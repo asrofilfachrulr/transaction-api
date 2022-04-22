@@ -1,5 +1,27 @@
 basePath: /api/v1
 definitions:
+  sql.OrderItem:
+    properties:
+      id:
+        type: integer
+      orderID:
+        type: integer
+      productID:
+        type: integer
+    type: object
+  sql.Product:
+    properties:
+      id:
+        type: integer
+      name:
+        type: integer
+      omit:
+        items:
+          $ref: '#/definitions/sql.OrderItem'
+        type: array
+      price:
+        type: number
+    type: object
   web.CustomerOutput:
     properties:
       customer_address_id:
@@ -121,4 +143,24 @@ paths:
       summary: add new user
       tags:
       - User
+  /products:
+    get:
+      description: get all products
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/web.NormalResp'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/sql.Product'
+                  type: array
+              type: object
+      summary: get all products
+      tags:
+      - Product
 swagger: "2.0"

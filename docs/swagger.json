@@ -131,9 +131,78 @@
                     }
                 }
             }
+        },
+        "/products": {
+            "get": {
+                "description": "get all products",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "get all products",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.NormalResp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/sql.Product"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "sql.OrderItem": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "orderID": {
+                    "type": "integer"
+                },
+                "productID": {
+                    "type": "integer"
+                }
+            }
+        },
+        "sql.Product": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "integer"
+                },
+                "omit": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/sql.OrderItem"
+                    }
+                },
+                "price": {
+                    "type": "number"
+                }
+            }
+        },
         "web.CustomerOutput": {
             "type": "object",
             "properties": {

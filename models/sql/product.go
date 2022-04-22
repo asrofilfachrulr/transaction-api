@@ -1,8 +1,8 @@
 package sql
 
 type Product struct {
-	ID         uint        `gorm:"primaryKey;auto_increment"`
-	Name       int         `gorm:"not null"`
-	Price      float64     `gorm:"not null"`
-	OrderItems []OrderItem `gorm:"constraint:OnDelete:CASCADE;foreignKey:ProductID"`
+	ID         uint        `json:"id" gorm:"primaryKey;auto_increment"`
+	Name       int         `json:"name" gorm:"not null"`
+	Price      float64     `json:"price" gorm:"not null"`
+	OrderItems []OrderItem `json:",omitempty" gorm:"constraint:OnDelete:CASCADE;foreignKey:ProductID"`
 }

@@ -11,5 +11,15 @@ func Migrate(db *gorm.DB) error {
 		db.Migrator().DropTable(Models...)
 	}
 
-	return db.AutoMigrate(Models...)
+	if err := db.AutoMigrate(Models...); err != nil {
+		return err
+	}
+
+	if os.Getenv("DROP") == "y" {
+		// insert static data
+		db.Create(&PaymentMethods)
+		db.Create(&Products)
+	}
+
+	return nil
 }
