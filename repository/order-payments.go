@@ -9,6 +9,6 @@ type OrderPaymentRepo struct {
 	DB *gorm.DB
 }
 
-func (c *OrderPaymentRepo) Create(m *sql.OrderPayment) error {
+func (c *OrderPaymentRepo) Create(m *[]sql.OrderPayment) error {
 	return c.DB.Create(m).Error
 }

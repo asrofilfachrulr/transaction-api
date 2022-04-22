@@ -99,14 +99,14 @@ const docTemplate = `{
         },
         "/order": {
             "post": {
-                "description": "add new user",
+                "description": "create new order of existing customer with available products and payment methods, all are entered by their IDs",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "Order"
                 ],
-                "summary": "add new user",
+                "summary": "create new order",
                 "parameters": [
                     {
                         "description": "Entry new order",
@@ -309,10 +309,37 @@ const docTemplate = `{
             }
         },
         "web.PostOrderInput": {
-            "type": "object"
+            "type": "object",
+            "required": [
+                "customer_address",
+                "payment_methods",
+                "products"
+            ],
+            "properties": {
+                "customer_address": {
+                    "type": "integer"
+                },
+                "payment_methods": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "products": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
         },
         "web.PostOrderOutput": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "order_id": {
+                    "type": "integer"
+                }
+            }
         },
         "web.RegisterCustomerInput": {
             "type": "object",

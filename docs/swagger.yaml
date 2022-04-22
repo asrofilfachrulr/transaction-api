@@ -63,8 +63,26 @@ definitions:
         type: string
     type: object
   web.PostOrderInput:
+    properties:
+      customer_address:
+        type: integer
+      payment_methods:
+        items:
+          type: integer
+        type: array
+      products:
+        items:
+          type: integer
+        type: array
+    required:
+    - customer_address
+    - payment_methods
+    - products
     type: object
   web.PostOrderOutput:
+    properties:
+      order_id:
+        type: integer
     type: object
   web.RegisterCustomerInput:
     properties:
@@ -142,7 +160,8 @@ paths:
       - Customer
   /order:
     post:
-      description: add new user
+      description: create new order of existing customer with available products and
+        payment methods, all are entered by their IDs
       parameters:
       - description: Entry new order
         in: body
@@ -162,9 +181,9 @@ paths:
                 data:
                   $ref: '#/definitions/web.PostOrderOutput'
               type: object
-      summary: add new user
+      summary: create new order
       tags:
-      - User
+      - Order
   /payment/methods:
     get:
       description: get all avalaible payment methods

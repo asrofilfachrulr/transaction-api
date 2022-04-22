@@ -25,6 +25,8 @@ func InitAPI(r *gin.Engine) *gin.Engine {
 	api := r.Group("/api/v1")
 
 	api.POST("/customer", handlers.PostCustomer)
+	api.POST("/order", handlers.PostOrder)
+
 	api.GET("/customers", handlers.GetAllCustomers)
 	api.GET("/products", handlers.GetAllProducts)
 	api.GET("/payment/methods", handlers.GetAllPaymentMethods)
