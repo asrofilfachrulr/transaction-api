@@ -1,3 +1,4 @@
+basePath: /api/v1
 definitions:
   web.PostOrderInput:
     type: object
@@ -13,7 +14,12 @@ definitions:
         type: string
     type: object
 info:
-  contact: {}
+  contact:
+    email: riidloa@gmail.com
+    name: Developer
+  description: API provide simple transaction
+  title: Transaction API
+  version: "1.0"
 paths:
   /order:
     post:

@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/asrofilfachrulr/transaction-api/config"
+	"github.com/asrofilfachrulr/transaction-api/docs"
 	"github.com/joho/godotenv"
-	"github.com/swaggo/swag/example/basic/docs"
 )
 
 func init() {
@@ -34,6 +34,14 @@ func init() {
 	docs.SwaggerInfo.Host = "localhost:8080"
 }
 
+// @title Transaction API
+// @version 1.0
+// @description API provide simple transaction
+
+// @contact.name Developer
+// @contact.email riidloa@gmail.com
+
+// @BasePath /api/v1
 func main() {
 	server := config.NewServer()
 	server.Init()
