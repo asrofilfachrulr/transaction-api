@@ -9,13 +9,35 @@ definitions:
       productID:
         type: integer
     type: object
+  sql.OrderPayment:
+    properties:
+      id:
+        type: integer
+      orderID:
+        type: integer
+      paymentMethodID:
+        type: integer
+    type: object
+  sql.PaymentMethod:
+    properties:
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      name:
+        type: integer
+      orderPayments:
+        items:
+          $ref: '#/definitions/sql.OrderPayment'
+        type: array
+    type: object
   sql.Product:
     properties:
       id:
         type: integer
       name:
         type: integer
-      omit:
+      orderItems:
         items:
           $ref: '#/definitions/sql.OrderItem'
         type: array
@@ -143,6 +165,26 @@ paths:
       summary: add new user
       tags:
       - User
+  /payment/methods:
+    get:
+      description: get all avalaible payment methods
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/web.NormalResp'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/sql.PaymentMethod'
+                  type: array
+              type: object
+      summary: get all avalaible payment methods
+      tags:
+      - Payment
   /products:
     get:
       description: get all products

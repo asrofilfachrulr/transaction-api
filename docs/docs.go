@@ -140,6 +140,41 @@ const docTemplate = `{
                 }
             }
         },
+        "/payment/methods": {
+            "get": {
+                "description": "get all avalaible payment methods",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "get all avalaible payment methods",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.NormalResp"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/sql.PaymentMethod"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/products": {
             "get": {
                 "description": "get all products",
@@ -191,6 +226,40 @@ const docTemplate = `{
                 }
             }
         },
+        "sql.OrderPayment": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "orderID": {
+                    "type": "integer"
+                },
+                "paymentMethodID": {
+                    "type": "integer"
+                }
+            }
+        },
+        "sql.PaymentMethod": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "integer"
+                },
+                "orderPayments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/sql.OrderPayment"
+                    }
+                }
+            }
+        },
         "sql.Product": {
             "type": "object",
             "properties": {
@@ -200,7 +269,7 @@ const docTemplate = `{
                 "name": {
                     "type": "integer"
                 },
-                "omit": {
+                "orderItems": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/sql.OrderItem"

@@ -27,6 +27,7 @@ func InitAPI(r *gin.Engine) *gin.Engine {
 	api.POST("/customer", handlers.PostCustomer)
 	api.GET("/customers", handlers.GetAllCustomers)
 	api.GET("/products", handlers.GetAllProducts)
+	api.GET("/payment/methods", handlers.GetAllPaymentMethods)
 
 	// swagger route
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
