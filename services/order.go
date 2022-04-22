@@ -6,9 +6,10 @@ import (
 )
 
 type OrderService struct {
-	OrderRepo        *repository.OrderRepo
-	OrderPaymentRepo *repository.OrderPaymentRepo
-	OrderItemRepo    *repository.OrderItemsRepo
+	OrderRepo         *repository.OrderRepo
+	OrderPaymentRepo  *repository.OrderPaymentRepo
+	OrderItemRepo     *repository.OrderItemsRepo
+	PaymentMethodRepo *repository.PaymentMethodRepo
 }
 
 func (or *OrderService) CreateOrder(o *sql.Order, oi *[]sql.OrderItem, opm *[]sql.OrderPayment) error {
@@ -28,7 +29,25 @@ func (or *OrderService) CreateOrder(o *sql.Order, oi *[]sql.OrderItem, opm *[]sq
 		return err
 	}
 
-	if err := or.OrderPaymentRepo.Create(opm); err != nil {
+	var pm []sql.PaymentMethod
+	if err := or.PaymentMethodRepo.FindAll(&pm); err != nil {
+		return err
+	}
+
+	mapper := make(map[uint]bool)
+
+	for _, it := range pm {
+		mapper[it.ID] = it.IsActive
+	}
+
+	opmFiltered := &[]sql.OrderPayment{}
+	for _, it := range *opm {
+		if mapper[it.PaymentMethodID] {
+			*opmFiltered = append(*opmFiltered, it)
+		}
+	}
+
+	if err := or.OrderPaymentRepo.Create(opmFiltered); err != nil {
 		return err
 	}
 
