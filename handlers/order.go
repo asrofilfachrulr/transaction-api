@@ -37,9 +37,10 @@ func PostOrder(ctx *gin.Context) {
 	}
 
 	service := services.OrderService{
-		OrderRepo:        &repository.OrderRepo{DB: tx},
-		OrderItemRepo:    &repository.OrderItemsRepo{DB: tx},
-		OrderPaymentRepo: &repository.OrderPaymentRepo{DB: tx},
+		OrderRepo:         &repository.OrderRepo{DB: tx},
+		OrderItemRepo:     &repository.OrderItemsRepo{DB: tx},
+		OrderPaymentRepo:  &repository.OrderPaymentRepo{DB: tx},
+		PaymentMethodRepo: &repository.PaymentMethodRepo{DB: tx},
 	}
 
 	o := &sql.Order{CustomerAddressID: input.CustomerAddrID}
