@@ -13,21 +13,20 @@ import (
 // @Tags User
 // @Param Body body web.PostOrderInput true "Entry new order"
 // @Produce json
-// @Success 201 {object} web.WithDataResp{data=web.PostOrderOutput}
-// @Fail 400 {object} web.PlainErr
+// @Success 201 {object} web.NormalResp{data=web.PostOrderOutput}
 // @Router /order [post]
 func PostOrder(ctx *gin.Context) {
 	var input web.PostOrderInput
 
 	if err := ctx.ShouldBindJSON(&input); err != nil {
-		ctx.JSON(http.StatusBadRequest, web.PlainErr{
+		ctx.JSON(http.StatusBadRequest, web.NormalResp{
 			Status:  "error",
 			Message: err.Error(),
 		})
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, web.WithDataResp{
+	ctx.JSON(http.StatusCreated, web.NormalResp{
 		Data: web.PostOrderOutput{},
 	})
 }

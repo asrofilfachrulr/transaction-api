@@ -1,16 +1,46 @@
 basePath: /api/v1
 definitions:
-  web.PostOrderInput:
+  web.CustomerOutput:
+    properties:
+      customer_address_id:
+        type: integer
+      customer_id:
+        type: integer
+      name:
+        type: string
     type: object
-  web.PostOrderOutput:
-    type: object
-  web.WithDataResp:
+  web.NormalResp:
     properties:
       data:
         type: any
       message:
         type: string
       status:
+        type: string
+    type: object
+  web.PostOrderInput:
+    type: object
+  web.PostOrderOutput:
+    type: object
+  web.RegisterCustomerInput:
+    properties:
+      address:
+        type: string
+      name:
+        type: string
+    required:
+    - address
+    - name
+    type: object
+  web.RegisterCustomerOutput:
+    properties:
+      address:
+        type: string
+      customer_address_id:
+        type: integer
+      customer_id:
+        type: integer
+      name:
         type: string
     type: object
 info:
@@ -21,6 +51,51 @@ info:
   title: Transaction API
   version: "1.0"
 paths:
+  /customer:
+    post:
+      description: add new customer
+      parameters:
+      - description: Register new customer
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/web.RegisterCustomerInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/web.NormalResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/web.RegisterCustomerOutput'
+              type: object
+      summary: add new customer
+      tags:
+      - Customer
+  /customers:
+    get:
+      description: get all customers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/web.NormalResp'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/web.CustomerOutput'
+                  type: array
+              type: object
+      summary: get all customers
+      tags:
+      - Customer
   /order:
     post:
       description: add new user
@@ -38,7 +113,7 @@ paths:
           description: Created
           schema:
             allOf:
-            - $ref: '#/definitions/web.WithDataResp'
+            - $ref: '#/definitions/web.NormalResp'
             - properties:
                 data:
                   $ref: '#/definitions/web.PostOrderOutput'

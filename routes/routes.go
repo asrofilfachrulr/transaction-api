@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/asrofilfachrulr/transaction-api/handlers"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -21,9 +22,10 @@ func InitAPI(r *gin.Engine) *gin.Engine {
 		ctx.Redirect(http.StatusMovedPermanently, "/swagger/index.html")
 	})
 
-	// api := r.Group("/api/v1")
+	api := r.Group("/api/v1")
 
-	// api.POST("/user", handlers.PostUserHandler)
+	api.POST("/customer", handlers.PostCustomer)
+	api.GET("/customers", handlers.GetAllCustomers)
 
 	// swagger route
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

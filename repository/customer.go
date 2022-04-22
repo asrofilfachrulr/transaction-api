@@ -12,3 +12,11 @@ type CustRepo struct {
 func (c *CustRepo) Create(m *sql.Customer) error {
 	return c.DB.Create(m).Error
 }
+
+func (c *CustRepo) FindAll(m *[]sql.Customer) error {
+	return c.
+		DB.
+		Preload("CustomerAddresses").
+		Find(m).
+		Error
+}
